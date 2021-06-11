@@ -32,6 +32,8 @@ public class AuthController {
 	@Autowired
 	private BlogUserDetailsService userDetailsService;
 
+	
+	
 	@RequestMapping(value = "/auth", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
@@ -45,11 +47,13 @@ public class AuthController {
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
 	
+	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
 		return ResponseEntity.ok(userDetailsService.save(user));
 	}
 
+	
 	private void authenticate(String username, String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));

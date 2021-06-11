@@ -46,17 +46,21 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		 * Il token utilizzato è in formato "Bearer Token". Se si vuole evitare 
 		 * di inserire Bearer nell'header si può rimuovere il valore dal file di configurazione
 		 */
-		if (requestTokenHeader != null && requestTokenHeader.startsWith(jwtTokenType)) {
+		if (requestTokenHeader != null ) {
+			if(requestTokenHeader.startsWith(jwtTokenType)) {
 			jwtToken = requestTokenHeader.substring(7);
-			try {
-				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-			} catch (IllegalArgumentException e) {
-				logger.error("Impossibile recuperare il token JWT", e);
-			} catch (ExpiredJwtException e) {
-				logger.error("Token scaduto!", e);
+				try {
+					username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+				} catch (IllegalArgumentException e) {
+					logger.error("Impossibile recuperare il token JWT", e);
+				} catch (ExpiredJwtException e) {
+					logger.error("Token scaduto!", e);
+				}
+			} else {
+				logger.warn("Il token recuperato dall'header Authorization non inizia con la parola chiave Bearer!");
 			}
 		} else {
-			logger.warn("Il token recuperato dall'header Authorization non inizia con la parola chiave Bearer!");
+			logger.debug("Utente anonimo.");
 		}
 
 		// Una volta ottenuto il token deve essere validato
