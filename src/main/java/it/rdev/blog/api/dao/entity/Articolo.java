@@ -47,7 +47,7 @@ public class Articolo {
 	@Column(name="data_modifica")
 	private LocalDateTime data_modifica;
 	@Column(name="data_creazione",  nullable = false)
-	private LocalDateTime data_crezione;
+	private LocalDateTime data_creazione;
 	
 	
 	
@@ -115,12 +115,12 @@ public class Articolo {
 		this.data_modifica = data_modifica;
 	}
 	
-	public LocalDateTime getData_crezione() {
-		return data_crezione;
+	public LocalDateTime getData_creazione() {
+		return data_creazione;
 	}
 	
-	public void setData_crezione(LocalDateTime data_crezione) {
-		this.data_crezione = data_crezione;
+	public void setData_creazione(LocalDateTime data_crezione) {
+		this.data_creazione = data_crezione;
 	}
 
 	public char getStato() {
