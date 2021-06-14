@@ -22,14 +22,12 @@ public interface ArticoliDao extends CrudRepository<Articolo, Integer>{
 	Set<Articolo> findByCategoria(String categoria);
 	Set<Articolo> findByStato(char stato);
 	Set<Articolo> findByTags(String[] tags);
-	
 	Set<Articolo> findByAutore(String autore);
-
+	int deleteById(long id);
+	
 	
 	@Query("SELECT a FROM Articolo a WHERE id = :id")
 	Articolo findById(long id);
-	
-	int deleteById(long id);
 	
 	@Query("INSERT INTO Articolo (stato, titolo, sottotitolo, testo, categoria, autore, data_pubblicazione, data_modifica, data_creazione)"
 			+ " values ( :stato, :titolo, :sottotitolo, :testo, :categoria, :autore, :data_pubblicazione, :data_modifica, :data_creazione) ")
@@ -40,8 +38,7 @@ public interface ArticoliDao extends CrudRepository<Articolo, Integer>{
 	Set<Articolo> ricercaAnd(Set<String> search);
 
 	
-	@Query("UPDATE Articolo a set a.")
-	int updateById(Long id);
+	Articolo save(Articolo art);
 
 
 	

@@ -3,8 +3,6 @@ package it.rdev.blog.api.controller.dto;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.websocket.Decoder.Text;
-
 import it.rdev.blog.api.dao.entity.Categoria;
 import it.rdev.blog.api.dao.entity.Tag;
 import it.rdev.blog.api.dao.entity.User;

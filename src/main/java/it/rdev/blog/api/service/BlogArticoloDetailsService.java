@@ -70,7 +70,36 @@ public class BlogArticoloDetailsService {
 			art.setTags(a.getTags());
 			
 			// VENGONO SETTATE LA DATA E L'ORA CORRENTE
+			art.setData_creazione(d);
+			art.setData_modifica(d);
+			art.setData_pubblicazione(a.getData_pubblicazione());
+		} else {
+			log.info("Uno dei campi non è stato compilato.");
+		}
+		return art;
+	}
+	
+	/*
+	 * METODO CHE CONVERTE UN OGGETTO DI TIPO ArticoliDTO IN UNO DI TIPO Articolo PER EFFETTUARE UN OPERAZIONE DI UPDATE
+	 * @param a		Singola istanza di tipo ArticoliDTO, ottenuta dalla RequestBody dell'utente
+	 */
+	private Articolo updateForm(ArticoliDTO a) {
+		Articolo art = null;
+		LocalDateTime d =  LocalDateTime.now();
+		if (a.getTitolo()!=null && a.getSottotitolo()!=null && a.getTesto()!=null && a.getAutore()!=null 
+				&& a.getAutore()!=null && a.getCategoria()!=null && a.getTags()!=null 
+				&& a.getData_creazione()!=null && a.getData_modifica()!=null 
+				&& a.getData_pubblicazione()!=null) {
+			art = new Articolo();
+			art.setTitolo(a.getTitolo());
+			art.setSottotitolo(a.getSottotitolo());
+			art.setTesto(a.getTesto());
+			art.setAutore(a.getAutore());
+			art.setCategoria(a.getCategoria());
+			art.setStato(a.getStato());
+			art.setTags(a.getTags());
 			art.setData_creazione(a.getData_creazione());
+			// VENGONO SETTATE LA DATA E L'ORA CORRENTE
 			art.setData_modifica(d);
 			art.setData_pubblicazione(a.getData_pubblicazione());
 		} else {
@@ -263,16 +292,15 @@ public class BlogArticoloDetailsService {
 	
 	// METODO CHE PERMETTE DI AGGIORNARE UN ARTICOLO TRAMITE DELETE-INSERT
 	public int updateById(Long id, ArticoliDTO articolo, String username) {
-		Articolo art = toDbForm(articolo, username);
-		int resp = articoloDao.deleteById(id);
+		Articolo art = updateForm(articolo);
+		Articolo result = articoloDao.save(art);
+
 		int insert = 0;
-		if(resp>0) {
-			insert = articoloDao.insertArticolo(art.getStato(), art.getTitolo(),
-					art.getSottotitolo(), art.getTesto(), art.getCategoria(), art.getAutore(),
-					art.getData_creazione(), art.getData_modifica(), art.getData_pubblicazione());
+		if (result!=null && result.getId() == articolo.getId()) {
+			insert = 1;
 		}
-		
 		return insert;
+
 	}
 	
 }
