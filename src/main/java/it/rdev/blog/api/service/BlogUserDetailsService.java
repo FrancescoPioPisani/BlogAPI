@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import it.rdev.blog.api.controller.dto.UserDTO;
 import it.rdev.blog.api.dao.UserDao;
 import it.rdev.blog.api.dao.entity.User;
+import it.rdev.blog.api.service.bean.BlogUserDetails;
 
 @Service
 public class BlogUserDetailsService implements UserDetailsService {
@@ -28,7 +29,7 @@ public class BlogUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("Utente non trovato per username: " + username);
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+		return new BlogUserDetails(user.getId(), user.getUsername(), user.getPassword(),
 				new ArrayList<>());
 	}
 	

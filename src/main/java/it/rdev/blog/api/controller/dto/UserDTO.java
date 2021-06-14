@@ -2,8 +2,17 @@ package it.rdev.blog.api.controller.dto;
 
 public class UserDTO {
 	
+	private Integer id;
 	private String username;
 	private String password;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getUsername() {
 		return username;

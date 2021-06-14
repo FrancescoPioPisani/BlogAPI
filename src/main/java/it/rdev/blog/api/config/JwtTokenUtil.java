@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import it.rdev.blog.api.service.bean.BlogUserDetails;
 
 @Component
 public class JwtTokenUtil implements Serializable {
@@ -31,6 +32,10 @@ public class JwtTokenUtil implements Serializable {
 	 */
 	public String getUsernameFromToken(String token) {
 		return getClaimFromToken(token, Claims::getSubject);
+	}
+	
+	public Long getUserIdFromToken(String token) {
+		return Long.parseLong(getClaimFromToken(token, Claims::getIssuer));
 	}
 
 	/**
@@ -75,6 +80,10 @@ public class JwtTokenUtil implements Serializable {
 	 */
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
+		if(userDetails instanceof BlogUserDetails) {
+			BlogUserDetails user = (BlogUserDetails) userDetails;
+			claims.put(Claims.ISSUER, user.getId());
+		}
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
 
