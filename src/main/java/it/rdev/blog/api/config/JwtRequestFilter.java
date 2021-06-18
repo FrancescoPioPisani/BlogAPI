@@ -60,7 +60,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				logger.warn("Il token recuperato dall'header Authorization non inizia con la parola chiave Bearer!");
 			}
 		} else {
-			logger.debug("Utente anonimo!");
+			logger.debug("Utente anonimo.");
 		}
 
 		// Una volta ottenuto il token deve essere validato
